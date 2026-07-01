@@ -8,11 +8,40 @@
       "Bash(git status:*)",
       "Bash(git log:*)",
       "Bash(git diff:*)",
+      "Bash(git fetch:*)",
+      "Bash(git checkout:*)",
       "Bash(ls:*)",
       "Bash(mkdir:*)",
       "Bash(cat:*)",
-      "Bash(pwd:*)"
+      "Bash(pwd:*)",
+      "Bash(node:*)",
+      "Bash(echo:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/tasks-check.js",
+            "timeout": 15,
+            "statusMessage": "GRIOT dashboard check"
+          }
+        ]
+      }
     ],
-    "deny": []
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/session-close.js",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }

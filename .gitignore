@@ -1,0 +1,29 @@
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Editors
+.vscode/
+.idea/
+*.code-workspace
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+
+# Output staging areas — move to Systems/ before committing
+output/
+*.tmp
+
+# PDF working files (commit only if deliberately added)
+# *.pdf
