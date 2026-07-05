@@ -4,6 +4,8 @@ const path   = require('path');
 const config = require('../config');
 const { invoke }    = require('./invoke');
 const { writeLog }  = require('../outputs/write-log');
+const { extract }   = require('../learning/extractor');
+const { proposeIfDue } = require('../learning/proposer');
 
 class GuardianBase {
   constructor(name) {
@@ -53,6 +55,17 @@ class GuardianBase {
     console.log(`[${this.name}] → ${logRel}`);
 
     await this.onComplete(filePath, content, result);
+
+    // Fire learning pipeline asynchronously — does not block the guardian response
+    setImmediate(async () => {
+      try {
+        await extract(this.name, result);
+        await proposeIfDue();
+      } catch (err) {
+        console.error(`[LEARN] Pipeline error: ${err.message}`);
+      }
+    });
+
     return { guardian: this.name, logPath, result };
   }
 }

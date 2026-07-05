@@ -47,6 +47,23 @@ console.log('');
 const watcher = require('./watcher');
 watcher.start();
 
+// ── Amendment watcher — detects Status: approved in learning/amendments/ ──────
+// When a guardian prompt amendment is approved, apply.js patches the prompt file.
+{
+  const chokidar     = require('chokidar');
+  const { applyApproved } = require('./learning/apply');
+  const amendDir     = path.join(__dirname, 'learning', 'amendments');
+  require('fs-extra').ensureDirSync(amendDir);
+
+  chokidar.watch(amendDir, { ignoreInitial: true, awaitWriteFinish: { stabilityThreshold: 500 } })
+    .on('change', async (fp) => {
+      console.log(`\n[AMENDMENT] Changed: ${require('path').basename(fp)}`);
+      try { await applyApproved(fp); }
+      catch (err) { console.error('[AMENDMENT] Apply error:', err.message); }
+    });
+  console.log('[AMENDMENT] Watching learning/amendments/ for approvals\n');
+}
+
 console.log('[GRIOT] All systems active. Press Ctrl+C to stop.\n');
 
 // ── Graceful shutdown ──────────────────────────────────────────────────────────
