@@ -1,0 +1,14 @@
+{
+  "name": "kujenga-image-gen",
+  "version": "1.0.0",
+  "description": "LinkedIn post image generator — OGUN shared tool. HTML/CSS templates rendered via system browser → JPG.",
+  "main": "generate.js",
+  "scripts": {
+    "test:kd-landscape": "node generate.js --client kujenga-digital --template headline-card --headline \"The Referral Trap\" --subtext \"YOU DON'T NEED MORE REFERRALS. YOU NEED A SYSTEM.\" --watermark \"DEMAND\" --size landscape --output output/test-kd-landscape.jpg",
+    "test:kd-portrait": "node generate.js --client kujenga-digital --template headline-card --headline \"The Referral Trap\" --subtext \"YOU DON'T NEED MORE REFERRALS. YOU NEED A SYSTEM.\" --watermark \"DEMAND\" --size portrait  --output output/test-kd-portrait.jpg",
+    "test:stat": "node generate.js --client kujenga-digital --template stat-card    --headline \"$497\"              --subtext \"DEMAND AUDIT · FULL DIAGNOSIS\" --watermark \"AUDIT\" --size landscape --output output/test-stat.jpg"
+  },
+  "dependencies": {
+    "puppeteer-core": "^22.15.0"
+  }
+}

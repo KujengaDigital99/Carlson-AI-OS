@@ -1,0 +1,14 @@
+{
+  "name": "html-to-pdf",
+  "version": "1.0.0",
+  "description": "Convert A4 HTML documents to PDF — Kujenga11 OGUN tool",
+  "main": "html-to-pdf.js",
+  "scripts": {
+    "convert": "node html-to-pdf.js"
+  },
+  "dependencies": {
+    "playwright": "^1.61.1",
+    "puppeteer": "^21.0.0"
+  },
+  "notes": "If puppeteer is already installed in the sibling image-gen folder, a separate npm install is not required — the script falls back to image-gen/node_modules/puppeteer automatically."
+}

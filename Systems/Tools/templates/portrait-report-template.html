@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[REPORT TITLE] — [YYYY-MM-DD]</title>
+
+  <!--
+    PORTRAIT A4 REPORT TEMPLATE
+    ============================
+    Carlson AI OS — Systems/Tools/templates/
+    Use for: post-webinar summaries, country briefs, stakeholder updates, investment reports
+
+    HOW TO USE:
+    1. Copy to Systems/Reports/[slug]-[YYYY-MM-DD].html
+    2. Replace all [PLACEHOLDER] values
+    3. Export: node Systems/Tools/html-to-pdf/html-to-pdf.js [file].html [file].pdf --portrait
+  -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Raleway:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── BRAND TOKENS ─────────────────────────────────────────────────────── */
+    :root {
+      --bg:       #FFFFFF;
+      --card:     #F2F2F2;
+      --dark:     #1C1C1C;
+      --lime:     #8DC63F;
+      --purple:   #7B35A8;
+      --red:      #C8392B;
+      --muted:    #666666;
+      --rule:     #E0E0E0;
+      --font-display: 'Poppins', sans-serif;
+      --font-body:    'Raleway', sans-serif;
+    }
+
+    /* ── PAGE SETUP — Portrait A4 ─────────────────────────────────────────── */
+    @page {
+      size: A4 portrait;
+      margin: 20mm 18mm 20mm 18mm;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 10pt;
+      line-height: 1.6;
+      color: var(--dark);
+      background: var(--bg);
+    }
+
+    /* ── HEADER ───────────────────────────────────────────────────────────── */
+    .report-header {
+      border-bottom: 3px solid var(--lime);
+      padding-bottom: 12pt;
+      margin-bottom: 20pt;
+    }
+
+    .report-header .label {
+      font-family: var(--font-body);
+      font-size: 7pt;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4pt;
+    }
+
+    .report-header h1 {
+      font-family: var(--font-display);
+      font-size: 20pt;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.15;
+      margin-bottom: 6pt;
+    }
+
+    .report-header .meta {
+      font-size: 8pt;
+      color: var(--muted);
+    }
+
+    .report-header .meta span + span::before {
+      content: " · ";
+    }
+
+    /* ── SECTION HEADINGS ─────────────────────────────────────────────────── */
+    h2 {
+      font-family: var(--font-display);
+      font-size: 12pt;
+      font-weight: 700;
+      color: var(--dark);
+      margin-top: 18pt;
+      margin-bottom: 6pt;
+      padding-bottom: 4pt;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    h3 {
+      font-family: var(--font-display);
+      font-size: 10pt;
+      font-weight: 600;
+      color: var(--dark);
+      margin-top: 12pt;
+      margin-bottom: 4pt;
+    }
+
+    /* ── BODY COPY ────────────────────────────────────────────────────────── */
+    p {
+      margin-bottom: 8pt;
+      font-size: 10pt;
+    }
+
+    ul, ol {
+      margin: 6pt 0 10pt 16pt;
+    }
+
+    li {
+      margin-bottom: 4pt;
+      font-size: 10pt;
+    }
+
+    /* ── HIGHLIGHT BOX ────────────────────────────────────────────────────── */
+    .highlight-box {
+      background: var(--card);
+      border-left: 4px solid var(--lime);
+      padding: 10pt 14pt;
+      margin: 12pt 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .highlight-box p {
+      margin-bottom: 4pt;
+      font-size: 9.5pt;
+    }
+
+    .highlight-box p:last-child { margin-bottom: 0; }
+
+    /* ── STAT ROW ─────────────────────────────────────────────────────────── */
+    .stat-row {
+      display: flex;
+      gap: 12pt;
+      margin: 12pt 0;
+    }
+
+    .stat-box {
+      flex: 1;
+      background: var(--card);
+      padding: 10pt;
+      border-top: 3px solid var(--lime);
+      text-align: center;
+    }
+
+    .stat-box .number {
+      font-family: var(--font-display);
+      font-size: 20pt;
+      font-weight: 800;
+      color: var(--dark);
+      display: block;
+    }
+
+    .stat-box .stat-label {
+      font-size: 7.5pt;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    /* ── TABLE ────────────────────────────────────────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10pt 0;
+      font-size: 9pt;
+    }
+
+    th {
+      background: var(--dark);
+      color: #FFFFFF;
+      font-family: var(--font-body);
+      font-weight: 700;
+      padding: 6pt 8pt;
+      text-align: left;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    td {
+      padding: 5pt 8pt;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: var(--card);
+    }
+
+    /* ── ACTION ITEMS ─────────────────────────────────────────────────────── */
+    .action-item {
+      display: flex;
+      gap: 10pt;
+      align-items: flex-start;
+      padding: 8pt 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .action-item .action-number {
+      font-family: var(--font-display);
+      font-size: 14pt;
+      font-weight: 800;
+      color: var(--lime);
+      min-width: 20pt;
+      line-height: 1.2;
+    }
+
+    .action-item .action-body strong {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 2pt;
+    }
+
+    .action-item .action-body span {
+      font-size: 8.5pt;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────────────────────── */
+    .report-footer {
+      margin-top: 28pt;
+      padding-top: 10pt;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 7.5pt;
+      color: var(--muted);
+    }
+
+    .report-footer .org-name {
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    /* ── PRINT ────────────────────────────────────────────────────────────── */
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .report-header, h2, .highlight-box, .stat-row { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="report-header">
+    <div class="label">DBIA — Diaspora Business Investment Africa</div>
+    <h1>[REPORT TITLE]</h1>
+    <div class="meta">
+      <span>[Month YYYY]</span>
+      <span>Prepared by Carlson Ifughe</span>
+      <span>[Audience: Investors / Ambassadors / AEM]</span>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <h2>Summary</h2>
+  <p>[2–3 sentence summary of what this report covers and the key finding.]</p>
+
+  <!-- STAT ROW (optional — remove if not applicable) -->
+  <div class="stat-row">
+    <div class="stat-box">
+      <span class="number">[N]</span>
+      <span class="stat-label">[Registered]</span>
+    </div>
+    <div class="stat-box">
+      <span class="number">[N]</span>
+      <span class="stat-label">[Attended]</span>
+    </div>
+    <div class="stat-box">
+      <span class="number">[N]</span>
+      <span class="stat-label">[Investor Enquiries]</span>
+    </div>
+    <div class="stat-box">
+      <span class="number">[N]</span>
+      <span class="stat-label">[Countries Represented]</span>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2>[Section Heading — e.g. Session Highlights / Investment Case / Key Findings]</h2>
+
+  <div class="highlight-box">
+    <p><strong>[Key insight or quote]</strong></p>
+    <p>[Supporting context — 1–2 sentences.]</p>
+  </div>
+
+  <p>[Body paragraph. Keep paragraphs to 3 sentences max. Active voice throughout.]</p>
+
+  <ul>
+    <li>[Specific point — name the person, the number, the institution]</li>
+    <li>[Specific point]</li>
+    <li>[Specific point]</li>
+  </ul>
+
+  <!-- SECTION 3 -->
+  <h2>[Section Heading — e.g. Investor Questions / Regulatory Notes / Pipeline Update]</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>[Column 1]</th>
+        <th>[Column 2]</th>
+        <th>[Column 3]</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>[Data]</td>
+        <td>[Data]</td>
+        <td>[Data]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- NEXT ACTIONS -->
+  <h2>Next Actions</h2>
+
+  <div class="action-item">
+    <div class="action-number">1</div>
+    <div class="action-body">
+      <strong>[Action]</strong>
+      <span>[Owner] · [Due date]</span>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-number">2</div>
+    <div class="action-body">
+      <strong>[Action]</strong>
+      <span>[Owner] · [Due date]</span>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-number">3</div>
+    <div class="action-body">
+      <strong>[Action]</strong>
+      <span>[Owner] · [Due date]</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="report-footer">
+    <div>
+      <span class="org-name">DBIA — Diaspora Business Investment Africa</span><br>
+      Carlson Ifughe · [email]
+    </div>
+    <div>
+      Confidential · [Month YYYY]
+    </div>
+  </div>
+
+</body>
+</html>

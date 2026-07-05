@@ -7,7 +7,7 @@ const GuardianBase = require('../base');
  * Flags missing elements before the webinar date — no country rep, no runsheet, no Q&A.
  */
 class Readiness extends GuardianBase {
-  constructor() { super('READINESS'); }
+  constructor() { super('SANGO'); }
 }
 
 module.exports = new Readiness();

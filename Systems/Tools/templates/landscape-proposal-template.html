@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[CLIENT] — Proposal [YYYY-MM]</title>
+
+  <!--
+    LANDSCAPE A4 PROPOSAL SCAFFOLD
+    ================================
+    OGUN Library — Systems/Library/OGUN/Tools/Scripts/html-to-pdf/
+    Recipe: HEPHAESTUS/Instructions/08-recipes.md — Recipe N
+
+    HOW TO USE:
+    1. Copy this file to Systems/Clients/[CLIENT]/Campaigns/[client]-proposal-v1-landscape.html
+    2. Run /brand-tokens to get the :root {} block, paste below
+    3. Build page by page — replace placeholder comments with real content
+    4. Test in Chrome (Ctrl+P to verify images print)
+    5. Export: node html-to-pdf.js [this-file].html [output].pdf
+
+    DO NOT edit this template directly. It is the reusable scaffold.
+  -->
+
+  <!-- FONTS — replace with client fonts if brand guide specifies different typefaces -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800;900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── BRAND TOKENS — paste output of /brand-tokens here ───────────────── */
+    :root {
+      --dk:   #000000;    /* REPLACE: deepest brand colour — cover, full-bleed dark pages */
+      --dm:   #111111;    /* REPLACE: mid brand colour — panels within dark pages */
+      --em:   #222222;    /* REPLACE: earth/heading colour — borders on dark */
+      --gd:   #999900;    /* REPLACE: primary accent (gold) — bars, numbers, CTAs */
+      --ga:   #BBBB00;    /* REPLACE: bright accent — hover/highlight, use sparingly */
+      --lt:   #F5F7FA;    /* light page background */
+      --pg:   #EEF1F8;    /* pale alternate section background */
+      --mid:  #5A6A8A;    /* muted text — captions, metadata */
+      --rule: #C5CFDF;    /* divider colour on light pages */
+      --wh:   #FFFFFF;
+    }
+
+    /* ── PRINT CRITICAL — DO NOT REMOVE ─────────────────────────────────── */
+    body {
+      margin: 0;
+      background: #B8BCC4;                    /* screen preview background — not printed */
+      font-family: 'Raleway', sans-serif;
+      -webkit-print-color-adjust: exact;      /* background images WILL NOT PRINT without this */
+      print-color-adjust: exact;
+    }
+
+    /* ── PAGE SYSTEM ─────────────────────────────────────────────────────── */
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+
+    .pg {
+      width: 297mm;
+      height: 210mm;
+      overflow: hidden;           /* clips content that overflows — check every page in Chrome */
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      background: var(--wh);
+      font-size: 7pt;
+      color: #333;
+      box-sizing: border-box;
+    }
+
+    /* Screen preview spacing */
+    @media screen {
+      .pg {
+        margin: 0 auto 16px;
+        box-shadow: 0 2px 16px rgba(0,0,0,.18);
+      }
+    }
+
+    /* ── TYPOGRAPHY ──────────────────────────────────────────────────────── */
+    .pf  { font-family: 'Poppins',  sans-serif; font-weight: 800; }
+    .rf  { font-family: 'Raleway',  sans-serif; }
+    .c-dk  { color: var(--dk); }
+    .c-gd  { color: var(--gd); }
+    .c-w   { color: var(--wh); }
+    .c-mid { color: var(--mid); }
+
+    /* ── FOOTERS ─────────────────────────────────────────────────────────── */
+    /* Dark-page footer */
+    .ft-d {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 2mm 8mm;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(255,255,255,.1);
+      font-size: 5.5pt; color: rgba(255,255,255,.3);
+      font-family: 'Raleway', sans-serif;
+    }
+
+    /* Light-page footer */
+    .ft-l {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 2mm 8mm;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--rule);
+      font-size: 5.5pt; color: var(--mid);
+      font-family: 'Raleway', sans-serif;
+    }
+
+    /* ── BACKGROUND IMAGE FORMULA (paste into any dark .pg) ─────────────── */
+    /*
+      background: var(--dk);
+      background-image:
+        linear-gradient(rgba(10,15,28,.82), rgba(10,15,28,.82)),
+        url('Images/bg-REPLACE.jpg');
+      background-size: cover;
+      background-position: center;
+
+      Overlay opacity guide:
+        .78 — landscape/wide shot (image depth is the point)
+        .82 — standard (most sector and SLA images)
+        .86 — heavy (image is illustrative; text is primary focus)
+    */
+
+    /* ── LOGO ON DARK BACKGROUNDS ────────────────────────────────────────── */
+    /*
+      If client logo has non-transparent background (white PNG from web/Word/PDF):
+
+      <div style="display:inline-block; background:rgba(255,255,255,.95);
+                  padding:2.5mm 4.5mm; border-radius:1.5px">
+        <img src="Images/[client]-logo.png" style="height:20px; display:block">
+      </div>
+    */
+
+    /* ── EXPORT BUTTON (screen only) ─────────────────────────────────────── */
+    .export-btn {
+      position: fixed; bottom: 20px; right: 20px; z-index: 999;
+      background: var(--dk); color: var(--wh);
+      border: none; padding: 10px 20px; border-radius: 4px;
+      font-family: 'Raleway', sans-serif; font-size: 11px; font-weight: 600;
+      cursor: pointer; letter-spacing: .05em;
+    }
+
+    @media print {
+      .export-btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── P1 COVER ───────────────────────────────────────────────────────────
+    Standard layout: 60/40 dark-left / light-right split
+    Left panel: logo + headline + positioning line
+    Right panel: contact card or key stats
+
+    Logo placement (if non-transparent PNG):
+    <div style="margin-bottom:7mm">
+      <div style="display:inline-block; background:rgba(255,255,255,.95);
+                  padding:2.5mm 4.5mm; border-radius:1.5px">
+        <img src="Images/[client]-logo.png" style="height:20px; display:block">
+      </div>
+    </div>
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="pg" style="display:flex;">
+    <!-- Left dark panel (60%) -->
+    <div style="width:60%; background:var(--dk); display:flex; flex-direction:column;
+                justify-content:space-between; padding:10mm 10mm 6mm 10mm;">
+      <!-- LOGO — replace src with actual logo path -->
+      <div style="margin-bottom:7mm">
+        <div style="display:inline-block; background:rgba(255,255,255,.95);
+                    padding:2.5mm 4.5mm; border-radius:1.5px">
+          <img src="Images/[client]-logo.png" style="height:20px; display:block"
+               alt="[Client] logo">
+        </div>
+      </div>
+
+      <!-- Headline -->
+      <div>
+        <div style="height:2px; width:20mm; background:var(--gd); margin-bottom:5mm"></div>
+        <div class="pf" style="font-size:26pt; line-height:1.1; color:var(--wh);
+                                margin-bottom:4mm">[HEADLINE — REPLACE]</div>
+        <div style="font-size:9pt; color:rgba(255,255,255,.65); line-height:1.5">
+          [Positioning line — one sentence max]
+        </div>
+      </div>
+
+      <!-- Footer strip -->
+      <div style="margin-top:8mm; padding-top:4mm; border-top:1px solid rgba(255,255,255,.12);
+                  font-size:6pt; color:rgba(255,255,255,.3); display:flex;
+                  justify-content:space-between;">
+        <span>[Client Name]</span>
+        <span>[Month Year]</span>
+      </div>
+    </div>
+
+    <!-- Right light panel (40%) -->
+    <div style="width:40%; background:var(--lt); display:flex; flex-direction:column;
+                justify-content:center; padding:10mm 10mm 10mm 10mm;">
+      <!-- Replace with contact card, key stats, or visual element -->
+      <div style="color:var(--dk); font-size:8pt; line-height:1.8;">
+        <div style="font-size:7pt; color:var(--gd); font-weight:700; letter-spacing:.12em;
+                    text-transform:uppercase; margin-bottom:4mm">SUBMITTED TO</div>
+        <div style="font-weight:700; font-size:10pt">[Recipient Name]</div>
+        <div style="color:var(--mid)">[Title]</div>
+        <div style="color:var(--mid)">[Organisation]</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── P2 PROBLEM / OPPORTUNITY ───────────────────────────────────────────
+    Dark full-bleed. Statement text. Ghost stat optional.
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="pg" style="background:var(--dk); display:flex; flex-direction:column;
+                          justify-content:center; padding:12mm 16mm;">
+    <!-- Page label -->
+    <div style="font-size:6pt; color:var(--gd); letter-spacing:.15em;
+                text-transform:uppercase; margin-bottom:6mm; font-weight:700">THE PROBLEM</div>
+
+    <!-- Main statement -->
+    <div class="pf" style="font-size:20pt; line-height:1.25; color:var(--wh); max-width:200mm">
+      [Replace with the core problem statement — 1–2 sentences]
+    </div>
+
+    <!-- Supporting detail (optional) -->
+    <div style="margin-top:8mm; font-size:8pt; color:rgba(255,255,255,.55); max-width:160mm;
+                line-height:1.7">
+      [Supporting context — why this problem persists, what it costs]
+    </div>
+
+    <div class="ft-d">
+      <span>[Client Name]</span>
+      <span>02</span>
+    </div>
+  </div>
+
+
+  <!-- ── P3 ABOUT [CLIENT] ───────────────────────────────────────────────────
+    Light editorial. Stats strip + company narrative.
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="pg" style="display:flex; flex-direction:column;">
+    <!-- Header bar -->
+    <div style="background:var(--dk); padding:5mm 10mm; display:flex;
+                justify-content:space-between; align-items:center;">
+      <div style="font-size:7pt; color:var(--gd); font-weight:700; letter-spacing:.12em;
+                  text-transform:uppercase">WHO WE ARE</div>
+      <div style="font-size:6pt; color:rgba(255,255,255,.3)">03</div>
+    </div>
+
+    <!-- Body -->
+    <div style="flex:1; padding:8mm 10mm; display:flex; gap:8mm;">
+      <!-- Narrative left -->
+      <div style="flex:3">
+        <div class="pf" style="font-size:14pt; color:var(--dk); margin-bottom:4mm">
+          [Company headline]
+        </div>
+        <div style="font-size:8pt; line-height:1.8; color:var(--mid)">
+          [Company description — 2–3 paragraphs]
+        </div>
+      </div>
+      <!-- Stats right -->
+      <div style="flex:2; display:flex; flex-direction:column; gap:5mm;">
+        <!-- Repeat this block for each stat -->
+        <div style="border-left:3px solid var(--gd); padding-left:5mm;">
+          <div class="pf" style="font-size:22pt; color:var(--dk)">00+</div>
+          <div style="font-size:7pt; color:var(--mid); line-height:1.4">[Stat label]</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ft-l">
+      <span>[Client Name]</span>
+      <span>03</span>
+    </div>
+  </div>
+
+
+  <!-- ── P4 SERVICES / OFFERINGS ────────────────────────────────────────────
+    3-column dark. AON step number pattern.
+    Copy the column block below and repeat × number of services.
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="pg" style="background:var(--dk); display:flex; flex-direction:column;">
+    <!-- Header -->
+    <div style="padding:5mm 10mm 4mm; border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font-size:6pt; color:var(--gd); font-weight:700; letter-spacing:.12em;
+                  text-transform:uppercase">WHAT WE OFFER</div>
+    </div>
+
+    <!-- 3-column service grid -->
+    <div style="flex:1; display:grid; grid-template-columns:1fr 1fr 1fr; gap:0;">
+      <!-- Column 1 -->
+      <div style="padding:7mm 8mm; border-right:1px solid rgba(255,255,255,.08);
+                  display:flex; flex-direction:column; justify-content:flex-start;">
+        <!-- Step number — AON pattern -->
+        <div class="pf" style="font-size:52pt; line-height:.85;
+                                 color:rgba(196,154,10,.22); margin-bottom:2mm">01</div>
+        <div style="height:3px; width:18mm; background:var(--gd); margin-bottom:3mm"></div>
+        <div class="pf" style="font-size:14pt; line-height:1.0; color:var(--wh); margin-bottom:3mm">
+          [Service Title]
+        </div>
+        <div style="font-size:7pt; color:rgba(255,255,255,.55); line-height:1.7">
+          [Service description — 2–3 sentences]
+        </div>
+      </div>
+
+      <!-- Column 2 — copy of column 1, change number and content -->
+      <div style="padding:7mm 8mm; border-right:1px solid rgba(255,255,255,.08);
+                  display:flex; flex-direction:column; justify-content:flex-start;">
+        <div class="pf" style="font-size:52pt; line-height:.85;
+                                 color:rgba(196,154,10,.22); margin-bottom:2mm">02</div>
+        <div style="height:3px; width:18mm; background:var(--gd); margin-bottom:3mm"></div>
+        <div class="pf" style="font-size:14pt; line-height:1.0; color:var(--wh); margin-bottom:3mm">
+          [Service Title]
+        </div>
+        <div style="font-size:7pt; color:rgba(255,255,255,.55); line-height:1.7">
+          [Service description]
+        </div>
+      </div>
+
+      <!-- Column 3 -->
+      <div style="padding:7mm 8mm;
+                  display:flex; flex-direction:column; justify-content:flex-start;">
+        <div class="pf" style="font-size:52pt; line-height:.85;
+                                 color:rgba(196,154,10,.22); margin-bottom:2mm">03</div>
+        <div style="height:3px; width:18mm; background:var(--gd); margin-bottom:3mm"></div>
+        <div class="pf" style="font-size:14pt; line-height:1.0; color:var(--wh); margin-bottom:3mm">
+          [Service Title]
+        </div>
+        <div style="font-size:7pt; color:rgba(255,255,255,.55); line-height:1.7">
+          [Service description]
+        </div>
+      </div>
+    </div>
+
+    <div class="ft-d">
+      <span>[Client Name]</span>
+      <span>04</span>
+    </div>
+  </div>
+
+
+  <!-- ── P5 WHY [CLIENT] ────────────────────────────────────────────────────
+    Light. Differentiation grid — 4–6 points.
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="pg" style="display:flex; flex-direction:column;">
+    <div style="background:var(--dk); padding:5mm 10mm; display:flex;
+                justify-content:space-between; align-items:center;">
+      <div style="font-size:7pt; color:var(--gd); font-weight:700; letter-spacing:.12em;
+                  text-transform:uppercase">WHY CHOOSE US</div>
+      <div style="font-size:6pt; color:rgba(255,255,255,.3)">05</div>
+    </div>
+
+    <div style="flex:1; padding:8mm 10mm;
+                display:grid; grid-template-columns:1fr 1fr 1fr; gap:5mm; align-content:start;">
+      <!-- Repeat this block × number of differentiators -->
+      <div style="padding:5mm; border-top:3px solid var(--gd);">
+        <div style="font-weight:700; font-size:9pt; color:var(--dk); margin-bottom:2mm">
+          [Differentiator title]
+        </div>
+        <div style="font-size:7pt; color:var(--mid); line-height:1.7">
+          [Description — 1–2 sentences]
+        </div>
+      </div>
+    </div>
+
+    <div class="ft-l">
+      <span>[Client Name]</span>
+      <span>05</span>
+    </div>
+  </div>
+
+
+  <!-- ── P6 SECTORS / TARGET MARKETS ───────────────────────────────────────
+    Cell grid — each cell has background image + overlay.
+    Adjust grid-template-columns to match number of sectors.
+
+    Per-cell background image formula:
+      background: var(--dk);
+      background-image: linear-gradient(rgba(10,15,28,.82), rgba(10,15,28,.82)),
+                        url('Images/bg-[SECTOR].jpg');
+      background-size: cover; background-position: center;
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="pg" style="display:flex; flex-direction:column;">
+    <div style="background:var(--dk); padding:5mm 10mm; display:flex;
+                justify-content:space-between; align-items:center;">
+      <div style="font-size:7pt; color:var(--gd); font-weight:700; letter-spacing:.12em;
+                  text-transform:uppercase">SECTORS WE SERVE</div>
+      <div style="font-size:6pt; color:rgba(255,255,255,.3)">06</div>
+    </div>
+
+    <!-- Sector grid — adjust columns to match number of sectors -->
+    <div style="flex:1; display:grid; grid-template-columns:repeat(4, 1fr); gap:0;">
+      <!-- Sector cell — copy and replace background image for each sector -->
+      <div style="background:var(--dk);
+                  background-image:linear-gradient(rgba(10,15,28,.82),rgba(10,15,28,.82)),url('Images/bg-SECTOR1.jpg');
+                  background-size:cover; background-position:center;
+                  display:flex; flex-direction:column; justify-content:flex-end;
+                  padding:5mm; border-right:1px solid rgba(255,255,255,.06);">
+        <div style="height:2px; width:10mm; background:var(--gd); margin-bottom:2mm"></div>
+        <div style="font-weight:700; font-size:8pt; color:var(--wh)">SECTOR NAME</div>
+        <div style="font-size:6.5pt; color:rgba(255,255,255,.55); margin-top:1mm">
+          [Descriptor line]
+        </div>
+      </div>
+      <!-- Repeat above block for each sector -->
+    </div>
+  </div>
+
+
+  <!-- ── P7 SLA / COMMITMENTS ───────────────────────────────────────────────
+    2×2 quadrant. Each quad has background image + 3px gold top bar + large stat.
+
+    Per-quad background image formula (same as sector cells above).
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="pg" style="display:flex; flex-direction:column;">
+    <div style="background:var(--dk); padding:5mm 10mm; display:flex;
+                justify-content:space-between; align-items:center;">
+      <div style="font-size:7pt; color:var(--gd); font-weight:700; letter-spacing:.12em;
+                  text-transform:uppercase">OUR COMMITMENTS</div>
+      <div style="font-size:6pt; color:rgba(255,255,255,.3)">07</div>
+    </div>
+
+    <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;">
+      <!-- Quadrant — copy × 4, change stat and background image each time -->
+      <div style="background:var(--dk);
+                  background-image:linear-gradient(rgba(10,15,28,.80),rgba(10,15,28,.80)),url('Images/bg-sla-STAT1.jpg');
+                  background-size:cover; background-position:center;
+                  display:flex; flex-direction:column; justify-content:flex-end;
+                  padding:6mm; border-right:1px solid rgba(255,255,255,.06);
+                  border-bottom:1px solid rgba(255,255,255,.06);">
+        <div style="height:3px; width:12mm; background:var(--gd); margin-bottom:4mm"></div>
+        <div class="pf" style="font-size:30pt; color:var(--gd); line-height:1">00%+</div>
+        <div style="font-size:8pt; color:var(--wh); font-weight:600; margin-top:2mm">
+          [Commitment label]
+        </div>
+        <div style="font-size:6.5pt; color:rgba(255,255,255,.45); margin-top:1mm; line-height:1.5">
+          [Supporting detail]
+        </div>
+      </div>
+      <!-- Repeat for Q2, Q3, Q4 -->
+    </div>
+  </div>
+
+
+  <!-- ── P8 QUALITY / CREDENTIALS ───────────────────────────────────────────
+    3-column all-dark. Each column has background image + bullet checklist.
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="pg" style="display:flex; flex-direction:column;">
+    <div style="background:var(--dk); padding:5mm 10mm; display:flex;
+                justify-content:space-between; align-items:center;">
+      <div style="font-size:7pt; color:var(--gd); font-weight:700; letter-spacing:.12em;
+                  text-transform:uppercase">QUALITY ASSURANCE</div>
+      <div style="font-size:6pt; color:rgba(255,255,255,.45)">08</div>
+    </div>
+
+    <div style="flex:1; display:grid; grid-template-columns:1fr 1fr 1fr; gap:0;">
+      <!-- Quality column — copy × 3, change content and background image -->
+      <div style="background:var(--dk);
+                  background-image:linear-gradient(rgba(10,15,28,.82),rgba(10,15,28,.82)),url('Images/bg-quality-TYPE1.jpg');
+                  background-size:cover; background-position:center;
+                  display:flex; flex-direction:column;
+                  border-right:1px solid rgba(255,255,255,.08);">
+        <div style="height:3px; background:var(--gd)"></div>
+        <div style="flex:1; padding:6mm">
+          <!-- Eyebrow label -->
+          <div style="font-size:6pt; color:var(--gd); font-weight:700; letter-spacing:.1em;
+                      text-transform:uppercase; margin-bottom:3mm">CATEGORY</div>
+          <!-- Column heading -->
+          <div class="pf" style="font-size:12pt; color:var(--wh); line-height:1.1; margin-bottom:4mm">
+            [Column Title]
+          </div>
+          <!-- Bullet list -->
+          <div style="font-size:7pt; color:rgba(255,255,255,.55); line-height:1.8;">
+            <div style="display:flex; gap:2mm; margin-bottom:2mm">
+              <span style="color:var(--gd); margin-top:.3mm">▪</span>
+              <span>[Bullet point]</span>
+            </div>
+            <!-- Repeat bullet block -->
+          </div>
+        </div>
+      </div>
+      <!-- Repeat for columns 2 and 3 -->
+    </div>
+
+    <div class="ft-d" style="color:rgba(255,255,255,.45)">
+      <span>[Client Name]</span>
+      <span>08</span>
+    </div>
+  </div>
+
+
+  <!-- ── P9 HOW WE WORK ─────────────────────────────────────────────────────
+    Light. Process steps — numbered flow.
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="pg" style="display:flex; flex-direction:column;">
+    <div style="background:var(--dk); padding:5mm 10mm; display:flex;
+                justify-content:space-between; align-items:center;">
+      <div style="font-size:7pt; color:var(--gd); font-weight:700; letter-spacing:.12em;
+                  text-transform:uppercase">HOW IT WORKS</div>
+      <div style="font-size:6pt; color:rgba(255,255,255,.3)">09</div>
+    </div>
+
+    <div style="flex:1; padding:8mm 10mm;
+                display:grid; grid-template-columns:repeat(4, 1fr); gap:6mm; align-content:center;">
+      <!-- Process step — copy × number of steps -->
+      <div>
+        <div class="pf" style="font-size:28pt; color:var(--gd); opacity:.3; line-height:1">01</div>
+        <div style="height:2px; width:12mm; background:var(--gd); margin:2mm 0 3mm"></div>
+        <div style="font-weight:700; font-size:9pt; color:var(--dk); margin-bottom:2mm">
+          [Step Title]
+        </div>
+        <div style="font-size:7pt; color:var(--mid); line-height:1.7">
+          [Step description]
+        </div>
+      </div>
+    </div>
+
+    <div class="ft-l">
+      <span>[Client Name]</span>
+      <span>09</span>
+    </div>
+  </div>
+
+
+  <!-- ── P10 CALL TO ACTION / NEXT STEPS ────────────────────────────────────
+    Dark full-bleed. Closing headline, contact, next step instruction.
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="pg" style="background:var(--dk); display:flex; flex-direction:column;
+                          justify-content:center; align-items:center; padding:12mm 20mm;
+                          text-align:center;">
+    <div style="height:2px; width:24mm; background:var(--gd); margin-bottom:8mm"></div>
+
+    <div class="pf" style="font-size:22pt; color:var(--wh); line-height:1.2; max-width:200mm;
+                            margin-bottom:6mm">
+      [Closing headline — the action you want the recipient to take]
+    </div>
+
+    <div style="font-size:9pt; color:rgba(255,255,255,.6); margin-bottom:10mm">
+      [Next step instruction — one clear sentence]
+    </div>
+
+    <!-- Contact -->
+    <div style="border-top:1px solid rgba(255,255,255,.12); padding-top:6mm;
+                font-size:8pt; color:rgba(255,255,255,.5); line-height:1.8;">
+      <span style="color:var(--wh); font-weight:600">[Name]</span>
+      &nbsp;·&nbsp; [Title] &nbsp;·&nbsp; [Email] &nbsp;·&nbsp; [Phone]
+    </div>
+
+    <div class="ft-d">
+      <span>[Client Name]</span>
+      <span>10</span>
+    </div>
+  </div>
+
+
+  <!-- ── EXPORT BUTTON ──────────────────────────────────────────────────────
+    Visible on screen only. Or use: node html-to-pdf.js [this-file].html [output].pdf
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <button class="export-btn" onclick="window.print()">Export PDF</button>
+
+</body>
+</html>

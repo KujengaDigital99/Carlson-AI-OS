@@ -9,22 +9,36 @@ module.exports = {
 
   anthropic: {
     apiKey: process.env.ANTHROPIC_API_KEY,
+    model:  process.env.DEFAULT_MODEL || 'claude-haiku-4-5-20251001',
   },
 
   // Per-guardian model and token config.
-  // Haiku for all three — outputs are structured 10-20 line analyses.
+  // Haiku for structured analysis; Sonnet for judgment and research.
   guardians: {
-    VOICE: {
-      model: process.env.VOICE_MODEL || 'claude-haiku-4-5-20251001',
+    OBATALA: {
+      model:     process.env.OBATALA_MODEL || 'claude-haiku-4-5-20251001',
       maxTokens: 512,
     },
-    READINESS: {
-      model: process.env.READINESS_MODEL || 'claude-haiku-4-5-20251001',
+    SANGO: {
+      model:     process.env.SANGO_MODEL || 'claude-haiku-4-5-20251001',
       maxTokens: 512,
     },
-    KEEPER: {
-      model: process.env.KEEPER_MODEL || 'claude-haiku-4-5-20251001',
+    ORUNMILA: {
+      model:     process.env.ORUNMILA_MODEL || 'claude-haiku-4-5-20251001',
       maxTokens: 384,
+    },
+    IFA: {
+      // MAP mode uses this model; RESEARCH mode upgrades to IFA_RESEARCH_MODEL
+      model:     process.env.IFA_MODEL || 'claude-haiku-4-5-20251001',
+      maxTokens: 1024,
+    },
+    ELEGBA: {
+      model:     process.env.ELEGBA_MODEL || 'claude-haiku-4-5-20251001',
+      maxTokens: 768,
+    },
+    OSHOSI: {
+      model:     process.env.OSHOSI_MODEL || 'claude-haiku-4-5-20251001',
+      maxTokens: 768,
     },
   },
 

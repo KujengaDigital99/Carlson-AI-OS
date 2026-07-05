@@ -11,7 +11,7 @@ const GuardianBase = require('../base');
  * or new action items that should be reflected in griot-state.md?
  */
 class Keeper extends GuardianBase {
-  constructor() { super('KEEPER'); }
+  constructor() { super('ORUNMILA'); }
 
   async onComplete(filePath, content, result) {
     // If KEEPER flags action items, append a note to griot-state.md
@@ -25,9 +25,9 @@ class Keeper extends GuardianBase {
         `\n\n---\n<!-- KEEPER flag ${new Date().toISOString().slice(0, 10)} -->\n` +
         `KEEPER detected action items in ${path.basename(filePath)} — review griot-state.md and update manually.\n`;
       fs.appendFileSync(stateFile, note, 'utf8');
-      console.log('[KEEPER] Action item flag appended to griot-state.md');
+      console.log('[ORUNMILA] Action item flag appended to griot-state.md');
     } catch (err) {
-      console.error(`[KEEPER] onComplete error: ${err.message}`);
+      console.error(`[ORUNMILA] onComplete error: ${err.message}`);
     }
   }
 }
