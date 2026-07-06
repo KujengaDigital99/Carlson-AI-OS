@@ -60,7 +60,7 @@ function buildTransport(account) {
 }
 
 const FROM_ADDRESSES = {
-  doing:    'Carlson Ifughe <carlson.ifughe@doing.biz>',
+  doing:    'Carlson Ifughe <carlson@doingbiz.africa>',
   csg:      'Carlson Ifughe <carlson@cornerstoneglobal.africa>',
   csg_info: 'Cornerstone Global Africa <info@cornerstoneglobal.africa>',
 };
