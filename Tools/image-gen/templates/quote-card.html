@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: {{WIDTH}}px; height: {{HEIGHT}}px;
+  overflow: hidden; position: relative;
+  background: {{CREAM}};
+  font-family: 'Inter', sans-serif;
+}
+{{#if BG_SRC}}
+.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.overlay { position: absolute; inset: 0; background: rgba(250,247,242,0.88); z-index: 2; }
+{{/if}}
+.border-top {
+  position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background: {{GREEN}}; z-index: 4;
+}
+.border-bottom {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 5px;
+  background: {{GOLD}}; z-index: 4;
+}
+.content {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  z-index: 5; padding: 9vh 9vw;
+}
+.open-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: calc({{WIDTH}}px * 0.11); font-weight: 700;
+  color: {{GREEN}}; opacity: 0.18; line-height: 0.6;
+  margin-bottom: 2vh; user-select: none;
+}
+.quote-text {
+  font-family: 'Playfair Display', serif;
+  font-size: calc({{WIDTH}}px * 0.038);
+  font-style: italic; font-weight: 400; line-height: 1.45;
+  color: {{DARK}};
+  white-space: pre-line;
+}
+.attribution-wrap {
+  display: flex; align-items: center; margin-top: 4vh; gap: 1.4vw;
+}
+.attr-bar { width: calc({{WIDTH}}px * 0.03); height: 2px; background: {{GOLD}}; flex-shrink: 0; }
+.attribution {
+  font-family: 'Inter', sans-serif;
+  font-size: calc({{WIDTH}}px * 0.014);
+  font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: {{GREEN}};
+}
+.logo-wrap {
+  position: absolute; bottom: 5.5vh; right: 6vw; z-index: 6;
+}
+.logo-wrap img { height: calc({{HEIGHT}}px * 0.048); opacity: 0.85; filter: brightness(0) saturate(100%) invert(16%) sepia(58%) saturate(800%) hue-rotate(108deg) brightness(92%) contrast(101%); }
+</style>
+</head>
+<body>
+{{#if BG_SRC}}<img class="bg" src="{{BG_SRC}}"><div class="overlay"></div>{{/if}}
+<div class="border-top"></div>
+<div class="border-bottom"></div>
+<div class="content">
+  <div class="open-quote">"</div>
+  <div class="quote-text">{{QUOTE}}</div>
+  {{#if ATTRIBUTION}}
+  <div class="attribution-wrap">
+    <div class="attr-bar"></div>
+    <div class="attribution">{{ATTRIBUTION}}</div>
+  </div>
+  {{/if}}
+</div>
+{{#if LOGO_SRC}}<div class="logo-wrap"><img src="{{LOGO_SRC}}"></div>{{/if}}
+</body>
+</html>

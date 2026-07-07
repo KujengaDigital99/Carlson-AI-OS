@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: {{WIDTH}}px; height: {{HEIGHT}}px;
+  overflow: hidden; position: relative;
+  background: {{GREEN_DARK}};
+  font-family: 'Inter', sans-serif;
+}
+{{#if BG_SRC}}
+.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.overlay { position: absolute; inset: 0; background: rgba(0,55,20,0.82); z-index: 2; }
+{{/if}}
+.side-bar {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: calc({{WIDTH}}px * 0.008);
+  background: {{GOLD}}; z-index: 4;
+}
+.diagonal {
+  position: absolute; bottom: -5%; right: -2%;
+  width: 55%; height: 110%;
+  background: rgba(255,255,255,0.022);
+  transform: skewX(-12deg); z-index: 3;
+}
+.tag {
+  position: absolute; top: 7vh; left: 8vw; z-index: 5;
+  background: {{GOLD}};
+  color: #000; font-size: calc({{WIDTH}}px * 0.011);
+  font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.7vh 1.6vw;
+}
+.content {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  z-index: 5; padding: 9vh 8vw;
+}
+.series-label {
+  font-family: 'Inter', sans-serif;
+  font-size: calc({{WIDTH}}px * 0.012);
+  font-weight: 600; letter-spacing: 0.2em;
+  text-transform: uppercase; color: {{GOLD}};
+  margin-bottom: 2.5vh;
+}
+.headline {
+  font-family: 'Playfair Display', serif;
+  font-size: {{HEADLINE_SIZE}}px;
+  font-weight: 900; line-height: 1.06;
+  color: #FFFFFF;
+  white-space: pre-line;
+  max-width: 75%;
+}
+.date-row {
+  display: flex; align-items: center; gap: 1.4vw;
+  margin-top: 4vh;
+}
+.date-bar { width: calc({{WIDTH}}px * 0.03); height: 2px; background: {{GOLD}}; }
+.date-text {
+  font-family: 'Inter', sans-serif;
+  font-size: calc({{WIDTH}}px * 0.016);
+  font-weight: 500; color: rgba(255,255,255,0.78);
+  letter-spacing: 0.04em;
+}
+.register-cta {
+  margin-top: 3vh;
+  display: inline-block;
+  border: 1px solid {{GOLD}};
+  color: {{GOLD}};
+  font-family: 'Inter', sans-serif;
+  font-size: calc({{WIDTH}}px * 0.013);
+  font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1.1vh 2.2vw;
+}
+.logo-wrap {
+  position: absolute; bottom: 6vh; right: 7vw; z-index: 6;
+}
+.logo-wrap img { height: calc({{HEIGHT}}px * 0.056); opacity: 0.9; }
+</style>
+</head>
+<body>
+{{#if BG_SRC}}<img class="bg" src="{{BG_SRC}}"><div class="overlay"></div>{{/if}}
+<div class="side-bar"></div>
+<div class="diagonal"></div>
+<div class="tag">Live Webinar</div>
+<div class="content">
+  {{#if SUBTEXT}}<div class="series-label">{{SUBTEXT}}</div>{{/if}}
+  <div class="headline">{{HEADLINE}}</div>
+  {{#if DATE}}
+  <div class="date-row">
+    <div class="date-bar"></div>
+    <div class="date-text">{{DATE}}</div>
+  </div>
+  {{/if}}
+  <div class="register-cta">Register Free — doingbiz.africa</div>
+</div>
+{{#if LOGO_SRC}}<div class="logo-wrap"><img src="{{LOGO_SRC}}"></div>{{/if}}
+</body>
+</html>

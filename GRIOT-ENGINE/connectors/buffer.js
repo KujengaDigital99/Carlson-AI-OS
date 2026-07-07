@@ -73,12 +73,16 @@ async function getProfiles() {
  * @param {string}   [scheduledAt] — ISO 8601 UTC timestamp; omit to add to queue
  * @returns {object} Buffer API response
  */
-async function schedulePost(text, profileIds, scheduledAt = null) {
+async function schedulePost(text, profileIds, scheduledAt = null, imageUrl = null) {
   if (!profileIds.length) throw new Error('At least one profile ID required');
 
   const body = { text };
   profileIds.forEach((id, i) => { body[`profile_ids[${i}]`] = id; });
   if (scheduledAt) body.scheduled_at = scheduledAt;
+  if (imageUrl) {
+    body['media[photo]']     = imageUrl;
+    body['media[thumbnail]'] = imageUrl;
+  }
 
   return request('POST', '/updates/create.json', body);
 }

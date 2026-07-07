@@ -1,0 +1,12 @@
+{
+  "name": "carlson-image-gen",
+  "version": "1.0.0",
+  "description": "DBIA image generation tool — LinkedIn post cards",
+  "main": "generate.js",
+  "scripts": {
+    "test": "node generate.js --template headline-card --headline \"Test Headline\" --subtext \"TEST\" --output output/test.jpg"
+  },
+  "dependencies": {
+    "puppeteer-core": "^22.15.0"
+  }
+}

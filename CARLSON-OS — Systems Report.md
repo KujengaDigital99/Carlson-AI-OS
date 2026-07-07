@@ -72,6 +72,55 @@ The guardian of this system is **GRIOT** — the West African keeper of oral his
 
 ---
 
+## 4b. Tools
+
+| Tool | What it does | Command |
+|---|---|---|
+| **Image Gen** | Generate DBIA LinkedIn post cards (headline, quote, webinar templates) | `node Tools/image-gen/generate.js --template headline-card --headline "..."` |
+| **Buffer Post** | Schedule posts to LinkedIn via Buffer | `node Tools/post.js send --text "..."` |
+
+### Image Gen — Quick Reference
+```bash
+# Headline card (article announcement)
+node Tools/image-gen/generate.js --template headline-card \
+  --headline "Africa's Investment Window\nIs Open" \
+  --subtext "DIASPORA WEBINAR SERIES" \
+  --watermark "INVEST" \
+  --output Tools/image-gen/output/post.jpg
+
+# Quote card
+node Tools/image-gen/generate.js --template quote-card \
+  --quote "The continent is not waiting.\nIt is building." \
+  --attribution "Carlson Ifughe, DBIA" \
+  --output Tools/image-gen/output/quote.jpg
+
+# Webinar announcement card
+node Tools/image-gen/generate.js --template webinar-card \
+  --headline "Diaspora Investor Webinar #1\nRwanda" \
+  --subtext "DIASPORA INVESTOR SERIES · 2026" \
+  --date "Thursday, 17 July 2026 · 18:00 SAST" \
+  --output Tools/image-gen/output/webinar.jpg
+```
+Sizes: `--size landscape` (1600×1000, default) | `--size square` (1080×1080) | `--size portrait` (800×1600)
+Output lands in `Tools/image-gen/output/` — move to `Systems/CONTENT/Articles/` or `Systems/WEBINARS/` after review.
+
+### Buffer Post — Quick Reference
+```bash
+node Tools/post.js profiles           # list connected accounts
+node Tools/post.js queue              # see what's scheduled
+node Tools/post.js send --text "..."  # queue to LinkedIn
+node Tools/post.js send --text "..." --schedule "2026-07-17T16:00:00Z"  # schedule UTC time
+```
+Requires `BUFFER_ACCESS_TOKEN` in `GRIOT-ENGINE/.env` (get from buffer.com/developers → Apps).
+Image attachment: host the image publicly first (upload to doingbiz.africa or similar), then pass `--image-url "https://..."`.
+
+### Setup required on Carlson's machine
+1. `cd Tools/image-gen && npm install` — installs puppeteer-core
+2. Chrome or Edge must be installed (image gen uses it headlessly)
+3. `BUFFER_ACCESS_TOKEN` in `GRIOT-ENGINE/.env`
+
+---
+
 ## 5. Knowledge Base
 
 | File | Status | What it contains |
